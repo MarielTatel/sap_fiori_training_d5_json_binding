@@ -1,0 +1,80 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+    xmlns="sap.m" controllerName="sapips.training.jsonbinding.controller.JSONBinding">
+    <Page id="page" title="{i18n>title}">
+        <content>
+            <!-- DATA BINDING BASICS -->
+            <Panel id="idDataBindPanel" headerText="{i18n>dataBindText}" class="sapUiResponsiveMargin" width="auto">
+                <content>
+                    <f:SimpleForm id="idDataBindingForm" editable="true"
+                        xmlns:sap.ui.core="sap.ui.core" singleContainerFullSize="false" layout="ResponsiveGridLayout" labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="2" emptySpanS="2" columnsXL="2" columnsL="1" columnsM="1">
+                        <f:content>
+                            <Label id="lblEID" text="{i18n>eidLbl}" labelFor="inEID"/>
+                            <Input id="inEID" value="" enabled="true"/>
+                            <Label id="lblEnabled" text="{i18n>enabledLbl}" labelFor="cbEnabled"/>
+                            <CheckBox id="cbEnabled" selected="true"/>
+                        </f:content>
+                    </f:SimpleForm>
+                </content>
+            </Panel>
+
+            <!-- ADDRESS DETAILS -->
+            <Panel id="idAddrDetPanel" headerText="{i18n>addressDetText}" class="sapUiResponsiveMargin" width="auto">
+                <content>
+                    <f:SimpleForm id="idAddrDetForm" editable="true"
+                        xmlns:sap.ui.core="sap.ui.core" singleContainerFullSize="false" layout="ResponsiveGridLayout" labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="2" emptySpanS="2" columnsXL="2" columnsL="1" columnsM="1">
+                        <f:content>
+                            <Label id="lblAddr" text="{i18n>addrLbl}" labelFor="inAddr"/>
+                            <Text id="inAddr" class="sapUiSmallMarginBottom" text="{/Address/Street} {/Address/Zip} {/Address/City} {/Address/Country}" />
+                            <Link id="linkSendEmail" text="{i18n>sendEmailTxt}" href="{ path: '/EID', formatter: '.formatter.formatMail'}"/>
+                            <Label id="lblSalesAmt" class="sapUiSmallMarginBegin" text="{i18n>salesAmtLbl}" labelFor="inSalesAmt"/>
+                            <Input id="inSalesAmt" class="sapUiSmallMarginBegin" type="Number" enabled="true" maxLength="8"/>
+                        </f:content>
+                    </f:SimpleForm>
+                </content>
+            </Panel>
+
+            <!-- AGGREGATION BINDING -->
+            <Panel id="idAggregBindPanel" headerText="{i18n>aggregBindText}" class="sapUiResponsiveMargin" width="auto">
+                <content>
+                    <List id="ProductList">
+                        <ObjectListItem >
+                        </ObjectListItem>
+                    </List>
+                </content>
+            </Panel>
+
+            <!-- PRODUCT DETAILS -->
+            <Panel id="idProductDetPanel" headerText="{i18n>productDetText}" class="sapUiResponsiveMargin" width="auto">
+                <content>
+                    <f:SimpleForm id="idProdDetForm" editable="true"
+                        xmlns:sap.ui.core="sap.ui.core" singleContainerFullSize="false" layout="ResponsiveGridLayout" labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="2" emptySpanS="2" columnsXL="2" columnsL="1" columnsM="1">
+                        <f:content>
+                            <Label id="lblProductID" text="{i18n>productIdLbl}" />
+                            <Input id="inProductID" />
+                            <Label id="lblProductName" text="{i18n>productNameLbl}" />
+                            <Input id="inProductName" />
+                            <Label id="lblSupplierID" text="{i18n>supplierIdLbl}" />
+                            <Input id="inSupplierID" />
+                            <Label id="lblCategoryrID" text="{i18n>categoryIdLbl}" />
+                            <Input id="inCategoryID" />
+                            <Label id="lblQtyPU" text="{i18n>qtyPULbl}" />
+                            <Input id="inQtyPU" />
+                            <Label id="lblUnitPrice" text="{i18n>unitPriceLbl}" />
+                            <Input id="inUnitPrice" type="Number" />
+                            <Label id="lblUnitsInStock" text="{i18n>unitsInStockLbl}" />
+                            <Input id="inUnitsInStock" type="Number"/>
+                            <Label id="lblUnitsOnOrder" text="{i18n>unitsOnOrderLbl}" />
+                            <Input id="inUnitsOnOrder" />
+                            <Label id="lblReorderLvl" text="{i18n>reorderLvlLbl}" />
+                            <Input id="inReorderLvl" />
+                            <Label id="lblDsicontinued" text="{i18n>disconLbl}" />
+                            <Input id="inDiscontinued" />
+                        </f:content>
+                    </f:SimpleForm>
+                </content>
+            </Panel>
+        </content>
+    </Page>
+</mvc:View>
