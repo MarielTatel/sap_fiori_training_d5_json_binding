@@ -11,9 +11,9 @@
                         xmlns:sap.ui.core="sap.ui.core" singleContainerFullSize="false" layout="ResponsiveGridLayout" labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="2" emptySpanS="2" columnsXL="2" columnsL="1" columnsM="1">
                         <f:content>
                             <Label id="lblEID" text="{i18n>eidLbl}" labelFor="inEID"/>
-                            <Input id="inEID" value="" enabled="true"/>
+                            <Input id="inEID" value="{/Eid}" enabled="{/Enabled}"/>
                             <Label id="lblEnabled" text="{i18n>enabledLbl}" labelFor="cbEnabled"/>
-                            <CheckBox id="cbEnabled" selected="true"/>
+                            <CheckBox id="cbEnabled" selected="{/Enabled}"/>
                         </f:content>
                     </f:SimpleForm>
                 </content>
@@ -25,11 +25,11 @@
                     <f:SimpleForm id="idAddrDetForm" editable="true"
                         xmlns:sap.ui.core="sap.ui.core" singleContainerFullSize="false" layout="ResponsiveGridLayout" labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="2" emptySpanS="2" columnsXL="2" columnsL="1" columnsM="1">
                         <f:content>
-                            <Label id="lblAddr" text="{i18n>addrLbl}" labelFor="inAddr"/>
-                            <Text id="inAddr" class="sapUiSmallMarginBottom" text="{/Address/Street} {/Address/Zip} {/Address/City} {/Address/Country}" />
-                            <Link id="linkSendEmail" text="{i18n>sendEmailTxt}" href="{ path: '/EID', formatter: '.formatter.formatMail'}"/>
+                            <Label id="lblAddr" text="{i18n>addrLbl}"/>
+                            <Text id="txtAddr" class="sapUiSmallMarginBottom" text="{/Address/Street} {/Address/Zip} {/Address/City} {/Address/Country}" />
+                            <Link id="linkSendEmail" text="{i18n>sendEmailTxt}" href="{ path: '/Eid', formatter: '.formatter.formatMail'}"/>
                             <Label id="lblSalesAmt" class="sapUiSmallMarginBegin" text="{i18n>salesAmtLbl}" labelFor="inSalesAmt"/>
-                            <Input id="inSalesAmt" class="sapUiSmallMarginBegin" type="Number" enabled="true" maxLength="8"/>
+                            <Input id="inSalesAmt" class="sapUiSmallMarginBegin" enabled="{/Enabled}" value="{ parts: [ {path: '/SalesAmount'}, {path: '/CurrencyCode'} ], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }" />
                         </f:content>
                     </f:SimpleForm>
                 </content>
@@ -38,8 +38,30 @@
             <!-- AGGREGATION BINDING -->
             <Panel id="idAggregBindPanel" headerText="{i18n>aggregBindText}" class="sapUiResponsiveMargin" width="auto">
                 <content>
-                    <List id="ProductList">
-                        <ObjectListItem >
+                    <List id="ProductList" items="{ProductsModel>/Product}" mode="SingleSelectMaster" itemPress=".onSelectProduct" inset="false" showSeparators="All" class="boldTitle">
+                        <ObjectListItem id="ProductItems" type="Active" title="{ProductsModel>ProductName}">
+                            <firstStatus>
+                                <ObjectStatus
+                                text = "{ 
+                                parts: [ {path: 'ProductsModel>UnitPrice'}, {path: '/CurrencyCode'}], 
+                                type: 'sap.ui.model.type.Currency', 
+                                formatOptions: {showMeasure: false} 
+                            }" state="None" />
+                            </firstStatus>
+                            <secondStatus>
+                                <ObjectStatus
+                                text = "{/CurrencyCode}" state="None" />
+                            </secondStatus>
+                            <attributes>
+                                <ObjectAttribute title="{i18n>qtyPUText}" text="{ProductsModel>QuantityPerUnit}"/>
+                                <ObjectAttribute title="{i18n>stockValText}" 
+                                    text = "{
+                                        parts: [ {path: 'ProductsModel>UnitPrice'}, 
+                                                {path: 'ProductsModel>UnitsInStock'},
+                                                {path: '/CurrencyCode'}],
+                                        formatter: '.formatter.formatStockValue'
+                                        }" />
+                            </attributes>
                         </ObjectListItem>
                     </List>
                 </content>
@@ -52,25 +74,25 @@
                         xmlns:sap.ui.core="sap.ui.core" singleContainerFullSize="false" layout="ResponsiveGridLayout" labelSpanXL="2" labelSpanL="2" labelSpanM="2" labelSpanS="3" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="2" emptySpanS="2" columnsXL="2" columnsL="1" columnsM="1">
                         <f:content>
                             <Label id="lblProductID" text="{i18n>productIdLbl}" />
-                            <Input id="inProductID" />
+                            <Input id="inProductID" value="{ProductsModel>ProductID}" />
                             <Label id="lblProductName" text="{i18n>productNameLbl}" />
-                            <Input id="inProductName" />
+                            <Input id="inProductName" value="{ProductsModel>ProductName}" />
                             <Label id="lblSupplierID" text="{i18n>supplierIdLbl}" />
-                            <Input id="inSupplierID" />
+                            <Input id="inSupplierID" value="{ProductsModel>SupplierID}" />
                             <Label id="lblCategoryrID" text="{i18n>categoryIdLbl}" />
-                            <Input id="inCategoryID" />
+                            <Input id="inCategoryID" value="{ProductsModel>CategoryID}" />
                             <Label id="lblQtyPU" text="{i18n>qtyPULbl}" />
-                            <Input id="inQtyPU" />
+                            <Input id="inQtyPU" value="{ProductsModel>QuantityPerUnit}" />
                             <Label id="lblUnitPrice" text="{i18n>unitPriceLbl}" />
-                            <Input id="inUnitPrice" type="Number" />
+                            <Input id="inUnitPrice" type="Number" value="{ProductsModel>UnitPrice}" />
                             <Label id="lblUnitsInStock" text="{i18n>unitsInStockLbl}" />
-                            <Input id="inUnitsInStock" type="Number"/>
+                            <Input id="inUnitsInStock" type="Number" value="{ProductsModel>UnitsInStock}" />
                             <Label id="lblUnitsOnOrder" text="{i18n>unitsOnOrderLbl}" />
-                            <Input id="inUnitsOnOrder" />
+                            <Input id="inUnitsOnOrder" value="{ProductsModel>UnitsOnOrder}" />
                             <Label id="lblReorderLvl" text="{i18n>reorderLvlLbl}" />
-                            <Input id="inReorderLvl" />
+                            <Input id="inReorderLvl" value="{ProductsModel>ReorderLevel}" />
                             <Label id="lblDsicontinued" text="{i18n>disconLbl}" />
-                            <Input id="inDiscontinued" />
+                            <Input id="inDiscontinued" value="{ProductsModel>Discontinued}" />
                         </f:content>
                     </f:SimpleForm>
                 </content>
