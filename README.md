@@ -9,7 +9,7 @@
 
 * Unchecking the Enabled checkbox will make those fields with enabled property become disabled.
     ![Image of Enabled checkbox unselected in Data Binding Basics Panel](./images/sapui5_basic_day5_5_enabled_uncheck.png)
-    *EID and Sales Amount input field are disables since they used the enabled property.*
+    *EID and Sales Amount input field are disabled since they used the enabled property.*
 
 <br> 
 
