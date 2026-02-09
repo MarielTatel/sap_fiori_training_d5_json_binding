@@ -18,7 +18,9 @@ sap.ui.define([
         },
 
         formatStockValue: function (fUnitPrice, iStockLevel, sCurrCode) {
-            var oCurrency = new Currency();
+            var oCurrency = new Currency( {
+                showMeasure: false
+            });
             return oCurrency.formatValue([fUnitPrice * iStockLevel, sCurrCode], "string");
         }
 

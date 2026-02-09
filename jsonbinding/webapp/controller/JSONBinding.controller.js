@@ -26,9 +26,8 @@ sap.ui.define([
         },
 
         onSelectProduct: function (oEvent) {
-            // var oList = oEvent.getSource();
-            // var oSelectedItem = oList.getSelectedItem();
-            var oSelectedItem = oEvent.getParameter("listItem");
+            var oList = oEvent.getSource();
+            var oSelectedItem = oList.getSelectedItem();
             var oBindingContext = oSelectedItem.getBindingContext("ProductsModel");
             var sPath = oBindingContext.getPath();
             var oPanel = this.byId("idProdDetForm");

@@ -29,7 +29,13 @@
                             <Text id="txtAddr" class="sapUiSmallMarginBottom" text="{/Address/Street} {/Address/Zip} {/Address/City} {/Address/Country}" />
                             <Link id="linkSendEmail" text="{i18n>sendEmailTxt}" href="{ path: '/Eid', formatter: '.formatter.formatMail'}"/>
                             <Label id="lblSalesAmt" class="sapUiSmallMarginBegin" text="{i18n>salesAmtLbl}" labelFor="inSalesAmt"/>
-                            <Input id="inSalesAmt" class="sapUiSmallMarginBegin" enabled="{/Enabled}" value="{ parts: [ {path: '/SalesAmount'}, {path: '/CurrencyCode'} ], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }" />
+                            <Input id="inSalesAmt" class="sapUiSmallMarginBegin" enabled="{/Enabled}" type="Text" maxLength="6"
+                                value="{ 
+                                    parts: [ {path: '/SalesAmount'}, {path: '/CurrencyCode'} ], 
+                                    type: 'sap.ui.model.type.Currency', 
+                                    formatOptions: {showMeasure: false}  
+                                    }" 
+                                />
                         </f:content>
                     </f:SimpleForm>
                 </content>
@@ -41,7 +47,7 @@
                     <List id="ProductList" items="{ProductsModel>/Product}" mode="SingleSelectMaster" itemPress=".onSelectProduct" inset="false" showSeparators="All" class="boldTitle">
                         <ObjectListItem id="ProductItems" type="Active" title="{ProductsModel>ProductName}">
                             <firstStatus>
-                                <ObjectStatus
+                                <ObjectStatus id="idUnitPriceDisp"
                                 text = "{ 
                                 parts: [ {path: 'ProductsModel>UnitPrice'}, {path: '/CurrencyCode'}], 
                                 type: 'sap.ui.model.type.Currency', 
@@ -49,12 +55,12 @@
                             }" state="None" />
                             </firstStatus>
                             <secondStatus>
-                                <ObjectStatus
+                                <ObjectStatus id="idCurrencyDisp"
                                 text = "{/CurrencyCode}" state="None" />
                             </secondStatus>
                             <attributes>
-                                <ObjectAttribute title="{i18n>qtyPUText}" text="{ProductsModel>QuantityPerUnit}"/>
-                                <ObjectAttribute title="{i18n>stockValText}" 
+                                <ObjectAttribute id="attrQtyPU" title="{i18n>qtyPUText}" text="{ProductsModel>QuantityPerUnit}"/>
+                                <ObjectAttribute id="attrStockVal" title="{i18n>stockValText}" 
                                     text = "{
                                         parts: [ {path: 'ProductsModel>UnitPrice'}, 
                                                 {path: 'ProductsModel>UnitsInStock'},
